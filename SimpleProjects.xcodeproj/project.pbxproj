@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4ECC6DF3223C4FD4007641ED /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECC6DF2223C4FD4007641ED /* Constants.swift */; };
 		90EC07F8223B0A3C00D56DC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EC07F7223B0A3C00D56DC6 /* AppDelegate.swift */; };
 		90EC07FA223B0A3C00D56DC6 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EC07F9223B0A3C00D56DC6 /* ProjectViewController.swift */; };
 		90EC0800223B0A3C00D56DC6 /* SimpleProjects.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 90EC07FE223B0A3C00D56DC6 /* SimpleProjects.xcdatamodeld */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4ECC6DF2223C4FD4007641ED /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		90EC07F4223B0A3C00D56DC6 /* SimpleProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90EC07F7223B0A3C00D56DC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90EC07F9223B0A3C00D56DC6 /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				90EC082E223BED2A00D56DC6 /* CloudKitProtocol.swift */,
 				90EC082A223B5D4900D56DC6 /* Extensions.swift */,
 				90EC0821223B0E8400D56DC6 /* Enums.swift */,
+				4ECC6DF2223C4FD4007641ED /* Constants.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				90EC07F8223B0A3C00D56DC6 /* AppDelegate.swift in Sources */,
 				90EC082B223B5D4900D56DC6 /* Extensions.swift in Sources */,
 				90EC0827223B165100D56DC6 /* ClientModel.swift in Sources */,
+				4ECC6DF3223C4FD4007641ED /* Constants.swift in Sources */,
 				90EC0822223B0E8500D56DC6 /* Enums.swift in Sources */,
 				90EC082D223BE72500D56DC6 /* ErrorEngine.swift in Sources */,
 				90EC081C223B0AC500D56DC6 /* CoreDataManager.swift in Sources */,

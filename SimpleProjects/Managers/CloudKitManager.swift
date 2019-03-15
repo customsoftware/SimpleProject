@@ -11,6 +11,7 @@ import CloudKit
 import os
 
 class CloudKitManager: NSObject {
+    let cloudLog = OSLog(subsystem: "com.customsoftware.simpleproject.plist", category: "cloudkit")
     static let isLocal = false
     let container = CKContainer.default()
     
@@ -20,6 +21,13 @@ class CloudKitManager: NSObject {
     private(set) lazy var publicDatabase = container.publicCloudDatabase
     private(set) lazy var sharedDatabase = container.sharedCloudDatabase
     private(set) lazy var customZone: CKRecordZone? = self.checkForCustomZone()
+    var changeTokens = [CKServerChangeToken]()
+    var cloudKitMeta = [String: Any]()
+    var isSubscriptionLocallyCached = false {
+        didSet {
+            UserDefaults.standard.set(isSubscriptionLocallyCached, forKey: SimpleProject.CloudKitMetaData.isSubscribedToDBChangesKey)
+        }
+    }
     
     private(set) var serialQueue = OperationQueue()
     var accountStatus: CKAccountStatus? {
@@ -43,6 +51,54 @@ class CloudKitManager: NSObject {
 
 // MARK: - These are inherited methods
 extension CloudKitManager: CloudKitCapable {
+    func setForCloudKit() {
+        <#code#>
+    }
+    
+    func configureForCloudKit() {
+        <#code#>
+    }
+    
+    func handleNotification(_ userInfo: [String : NSObject]) {
+        <#code#>
+    }
+    
+    func setMetaInformation() {
+        <#code#>
+    }
+    
+    func restoreTokensAndState() {
+        <#code#>
+    }
+    
+    func uploadChangedObjects(savedIDs: [ModelObject], deletedIDs: [CloudKitObject]) {
+        <#code#>
+    }
+    
+    func update(_ database: CKDatabase, with records: [CKRecord], whileRemoving deletedRecordIDs: [CKRecord.ID], with handler: @escaping CloudKitOperationHandler) {
+        <#code#>
+    }
+    
+    func fetchRecordsFromServer() {
+        <#code#>
+    }
+    
+    func atAppStart() {
+        <#code#>
+    }
+    
+    func throwAuthenticationRequestAlert() {
+        <#code#>
+    }
+    
+    func testForSubscriptions() {
+        <#code#>
+    }
+    
+    func setupSubscriptions() {
+        <#code#>
+    }
+    
     func setUserID(_ userID: CKRecord.ID) {
         guard let _ = currentUserRecordID else {
             currentUserRecordID = userID
@@ -77,6 +133,8 @@ extension CloudKitManager: CloudKitCapable {
 }
     
 extension CloudKitManager: PersistentStore {
+    func resetAll() { }
+    
     func flushDeleted<T>(_ listOfObjects: [T]) { }
     
     func retrieveList<T>(_ predicate: NSPredicate) -> [T] {
@@ -88,7 +146,7 @@ extension CloudKitManager: PersistentStore {
         return .failed(error: CoreDataErrors.otherError)
     }
     
-    func retrieveSingle<T>(_ objectID: UUID) -> T? {
+    func retrieveSingle<T>(_ objectID: String) -> T? {
         return nil
     }
 }

@@ -18,8 +18,9 @@ protocol PersistentStore: AnyObject {
     static var isLocal: Bool { get }
     func save(_ listOfModels: [ModelObject]) -> SaveResults
     func flushDeleted(_ listOfObjects: [ModelObject])
-    func retrieveSingle(_ objectID: UUID) -> ModelObject?
+    func retrieveSingle(_ objectID: String) -> ModelObject?
     func retrieveList(_ predicate: NSPredicate) -> [ModelObject]
+    func resetAll()
 }
 
 protocol Synchronizer {
@@ -79,9 +80,7 @@ extension CloudKitObject {
         lastUpdated = cloudLastUpdated
         recordName = cloudName
     }
-}
 
-extension CloudKitObject {
     var cloudKitRecordID: CKRecord.ID {
         let recordIDRoot = id
         let zone = Self.owningZone!.zoneID

@@ -39,3 +39,6 @@ enum CloudKitError: Error {
     case noUser
 }
 
+enum Entities: String, CaseIterable {
+    case Client
+}

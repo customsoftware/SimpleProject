@@ -14,9 +14,10 @@ enum CoreDataErrors: Error {
     case otherError
 }
 
+let coreDataErrorDomain = "com.customsoftware.simpleprojects.coredata"
+
 class CoreDataManager {
     static let isLocal = true
-    static let coreDataErrorDomain = "com.customsoftware.simpleprojects.coredata"
     
     let containerName: String
     let container: NSPersistentContainer
@@ -27,6 +28,13 @@ class CoreDataManager {
     
     lazy var cacheContext: NSManagedObjectContext = {
         return container.newBackgroundContext()
+    }()
+    
+    lazy var updateContext: NSManagedObjectContext = {
+        let _updateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        _updateContext.automaticallyMergesChangesFromParent = true
+        _updateContext.parent = self.viewContext
+        return _updateContext
     }()
     
     init(_ containerName: String) {
@@ -58,8 +66,45 @@ class CoreDataManager {
     }
 }
 
+fileprivate extension CoreDataManager {
+    private func deleteAllRecordsOf(_ entity: String) {
+        let entityRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        let batchDelete = NSBatchDeleteRequest(fetchRequest: entityRequest)
+        do {
+            try viewContext.execute(batchDelete)
+        } catch {
+            let result = ErrorEngine.handleError(error)
+            switch result {
+            default:()
+            }
+        }
+    }
+}
+
 extension CoreDataManager: PersistentStore {
-    func flushDeleted<T>(_ listOfObjects: [T]) { }
+    func resetAll() {
+        Entities.allCases.forEach({
+            self.deleteAllRecordsOf($0.rawValue)
+        })
+    }
+    
+    func flushDeleted(_ listOfObjects: [ModelObject]) {
+        var deletedIDs = [NSManagedObjectID]()
+        listOfObjects.forEach({
+            guard let coreDataObject = $0 as? NSManagedObject else { return }
+            deletedIDs.append(coreDataObject.objectID)
+        })
+        
+        let batchDelete = NSBatchDeleteRequest(objectIDs: deletedIDs)
+        do {
+            try viewContext.execute(batchDelete)
+        } catch {
+            let result = ErrorEngine.handleError(error)
+            switch result {
+            default:()
+            }
+        }
+    }
     
     func retrieveList<T>(_ predicate: NSPredicate) -> [T] {
         let retValue = [T]()
@@ -70,7 +115,7 @@ extension CoreDataManager: PersistentStore {
         return .failed(error: CoreDataErrors.otherError)
     }
     
-    func retrieveSingle<T>(_ objectID: UUID) -> T? {
+    func retrieveSingle<T>(_ objectID: String) -> T? {
         return nil
     }
 }
