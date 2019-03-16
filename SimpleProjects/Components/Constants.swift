@@ -12,4 +12,9 @@ struct SimpleProject {
     struct CloudKitMetaData {
         static let isSubscribedToDBChangesKey = NSLocalizedString("isSubscribedToDBChangesKey", comment: "")
     }
+    
+    static let metaDictionary: [String: Any] = {
+        let dictionary = Bundle.main.infoDictionary
+        return (dictionary!["CustomSoftwareMetaData"] as? [String: Any])!
+    }()
 }

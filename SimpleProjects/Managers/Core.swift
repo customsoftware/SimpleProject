@@ -21,6 +21,11 @@ class Core {
         
         return retValue
     }()
+    
+    lazy var cloudKitIsAvailable: Bool = {
+        return true
+    }()
+    
     let cloud: CloudKitManager
     let data: CoreDataManager
     

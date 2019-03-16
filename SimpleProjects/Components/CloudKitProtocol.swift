@@ -19,24 +19,23 @@ protocol CloudKitCapable: AnyObject {
     var serialQueue: OperationQueue { get }
     var accountStatus: CKAccountStatus? { get set }
     var isSubscriptionLocallyCached: Bool { get set }
-    var changeTokens: [CKServerChangeToken] { get set }
+    var changeTokens: [String: CKServerChangeToken] { get set }
     var cloudKitMeta: [String: Any] { get set }
     
     func getUserID()
-     func setupZones()
+    func setupZones()
     func checkForCustomZone() -> CKRecordZone?
-     func setForCloudKit()
-    func configureForCloudKit()
-     func handleNotification(_ userInfo: [String: NSObject])
-     func setMetaInformation()
-     func restoreTokensAndState()
-     func uploadChangedObjects(savedIDs: [ModelObject], deletedIDs: [CloudKitObject])
+    func setForCloudKit()
+    func handleNotification(_ userInfo: [String: NSObject])
+    func setMetaInformation()
+    func restoreTokensAndState()
+    func uploadChangedObjects(savedIDs: [ModelObject], deletedIDs: [CloudKitObject])
     func update(_ database: CKDatabase, with records: [CKRecord], whileRemoving deletedRecordIDs: [CKRecord.ID], with handler: @escaping CloudKitOperationHandler)
-     func fetchRecordsFromServer()
+    func fetchRecords(for type: String)
     func throwServerErrorAlert(with entity: String, and operationType: OperationType)
     func throwAuthenticationRequestAlert()
-    func showConnectionError(_ error: String)
-     func setUserID(_ userID: CKRecord.ID)
+    func showConnectionError(_ errorMessage: String)
+    func setUserID(_ userID: CKRecord.ID)
     func configureForCloudKitAccess()
     func handleRemoteStatusChange(_ notification: NSNotification)
     func testForSubscriptions()

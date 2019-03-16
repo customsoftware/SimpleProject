@@ -42,3 +42,9 @@ enum CloudKitError: Error {
 enum Entities: String, CaseIterable {
     case Client
 }
+
+enum SimpleProjectSubscriptionIDs: String, CaseIterable {
+    case clientUpdate = "client-changes"
+    case projectUpdate = "project-changes"
+    case taskUpdate = "task-changes"
+}
